@@ -4,6 +4,8 @@ I currently own a Ricoh C420DN Color Laser printer which uses Type 145 toner.  A
 I've noticed that some of the previous used toner, when placed into the printer, doesn't reset the supply level.  Searching the internet for information regarding how the supply level works led me to the chip embedded into the toner cartridge itself.  
 
 Since I had an empty cartridge lying around, I pulled the chip off to examine it:
+
+
 The interface:
 ![Image of board interface](images/ricohtype145boardinterface.jpg)
 The face:
@@ -100,6 +102,15 @@ Searching I2C address space. Found devices at:
 </li>
 </ol>
 
+# Toner EEPROM Address list
+
+| Address | Color |
+| ------- | ----- |
+| 0xA0(0x50 W) 0xA1(0x50 R) | Yellow |
+| 0xA2(0x51 W) 0xA3(0x51 R) | Magenta |
+| 0xA4(0x52 W) 0xA5(0x52 R) | Cyan |
+| 0xA6(0x53 W) 0xA7(0x53 R) | Black |
+
 # Reading Toner EEPROM
 Once the toner board is connected to the Bus Pirate, use a read command to read the EEPROM.  I found that for the Type 145 boards that I have, reading past 128 bytes repeats data.
 ```
@@ -144,8 +155,9 @@ Or you can use [i2c-dump](https://github.com/AdamLaurie/i2c-dump/tree/master) to
 00000000: a200 0102 0f03 01ff  | Magenta 145 HY
 00000000: a200 0102 0304 03ff  | Yellow 145 
 00000000: a200 0102 0f04 01ff  | Yellow 145 HY
-
 ```
+* Note: The values listed as 145 non-HY variants I can't verify as I don't have the origional packaging for them
+
 0x08 - 0x09 : New/Installed Cartridge?
 ```
 6400 | New Cartridge
@@ -163,13 +175,15 @@ Or you can use [i2c-dump](https://github.com/AdamLaurie/i2c-dump/tree/master) to
 ```
 00000020: 3539 3333 3331 0000 | 593331 | Black ?
 00000020: 3838 3833 3038 0000 | 888308 | Black 145 HY
-00000020: 3539 3333 3334 0000 | 593334 | Cyan ?
-00000020: 3838 3833 3131 0000 | 888311 | Cyan 145 HY
-00000020: 3539 3333 3333 0000 | 593333 | Magenta ?
-00000020: 3838 3833 3130 0000 | 888310 | Magenta 145 HY
 00000020: 3539 3333 3332 0000 | 593332 | Yellow ?
 00000020: 3838 3833 3039 0000 | 888309 | Yellow 145 HY
+00000020: 3539 3333 3333 0000 | 593333 | Magenta ?
+00000020: 3838 3833 3130 0000 | 888310 | Magenta 145 HY
+00000020: 3539 3333 3334 0000 | 593334 | Cyan ?
+00000020: 3838 3833 3131 0000 | 888311 | Cyan 145 HY
 ```
+* Note: I can't validate the non-HY EDP codes.  I assume they are non-HY (high yield), but there are 888 based EDP codes for those - 888276:Black, 888277:Yellow, 888278:Magenta, 888279:Cyan
+
 0x28 - 0x29 - New/Used Cartridge ?
 ```
 6400 | New Cartridge
@@ -192,9 +206,9 @@ Or you can use [i2c-dump](https://github.com/AdamLaurie/i2c-dump/tree/master) to
 ```
 0x5c - 0x5f - YYYYMMDD - 2nd Install Date (GMT)?
 
-0x70 - 0x73 - When installed set to CHIP
+0x70 - 0x73 - When installed set to 'CHIP'
 ```
-00000070: 4348 4950
+00000070: 4348 4950 | CHIP
 ```
 
 0x74 - 0x7e - Printer Machine ID
