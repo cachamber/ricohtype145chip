@@ -133,6 +133,74 @@ xxd blah.bin
 ```
 
 Or you can use [i2c-dump](https://github.com/AdamLaurie/i2c-dump/tree/master) to dump the EEPROM to a binary file. 
+# EEPROM Analysis
+0x00 - 0x07 : header values
+```
+00000000: a200 0102 0301 03ff  | Black 145
+00000000: a200 0102 0f01 01ff  | Black 145 HY
+00000000: a200 0102 0302 03ff  | Cyan 145 
+00000000: a200 0102 0f02 01ff  | Cyan 145 HY
+00000000: a200 0102 0303 03ff  | Magenta 145 
+00000000: a200 0102 0f03 01ff  | Magenta 145 HY
+00000000: a200 0102 0304 03ff  | Yellow 145 
+00000000: a200 0102 0f04 01ff  | Yellow 145 HY
+
+```
+0x08 - 0x09 : New/Installed Cartridge?
+```
+6400 | New Cartridge
+0000 | Installed Cartridge
+```
+0x10 - 0x15 : YYYYMM - Cartridge Manufacture Year/Month?
+
+0x16 - 0x1b : Static 
+```
+00000016: 4b4a 4337 3030
+```
+0x1c - 0x1f - Unknown
+
+0x20 - 0x27 - EPD #
+```
+00000020: 3539 3333 3331 0000 | 593331 | Black 145
+00000020: 3838 3833 3038 0000 | 888308 | Black 145 HY
+00000020: 3539 3333 3334 0000 | 593334 | Cyan 145
+00000020: 3838 3833 3131 0000 | 888311 | Cyan 145 HY
+00000020: 3539 3333 3333 0000 | 593333 | Magenta 145
+00000020: 3838 3833 3130 0000 | 888310 | Magenta 145 HY
+00000020: 3539 3333 3332 0000 | 593332 | Yellow 145
+00000020: 3838 3833 3039 0000 | 888309 | Yellow 145 HY
+```
+0x28 - 0x29 - New/Used Cartridge ?
+```
+6400 | New Cartridge
+004e | Installed Cartridge
+0a4e | Installed Cartridge
+```
+
+0x2a - 0x2f -
+```
+0000002a: 0000 ffff ffff
+```
+
+0x30 - 0x40 - Usage data?
+
+0x41 - 0x58 - 0xff
+
+0x58 - 0x5b - YYYYMMDD - Install Date of Cartridge (GMT)
+```
+00000058: 2023 0825
+```
+0x5c - 0x5f - YYYYMMDD - 2nd Install Date (GMT)?
+
+0x70 - 0x73 - When installed set to CHIP
+```
+00000070: 4348 4950
+```
+
+0x74 - 0x7e - Printer Machine ID
+```
+00000074: 53XX XXXX XXXX XXXX XXXX XX00 | SXXXXXXXXXX
+```
 
 # Links
 * [i2c-dump](https://github.com/AdamLaurie/i2c-dump/tree/master)
