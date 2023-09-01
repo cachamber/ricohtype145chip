@@ -226,6 +226,8 @@ Or you can use [i2c-dump](https://github.com/AdamLaurie/i2c-dump/tree/master) to
 # Summary
 The above data was gathered from 29 cartridges. A large group of them were new old stock. I'd like to take a look closer at the cartridges that aren't Type 145 HY - and dump more of those.  They are the ones that I picked up from Ebay used.
 
+One other note, the ID printed on the cartridge is the batch number - I was able to confirm that due to getting a couple of cartridges from the same batch.  They have different batch production numbers that differ by 1.  
+
 # Links
 * [i2c-dump](https://github.com/AdamLaurie/i2c-dump/tree/master)
 * [Toner Chip Reset](https://github.com/lugu/toner_chip_reset)
