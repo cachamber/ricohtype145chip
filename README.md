@@ -70,7 +70,8 @@ Ready
 </li>
 <li>Switch power supply on
 
-```I2C>W
+```
+I2C>W
 Power supplies ON
 ```
 </li>
@@ -163,13 +164,16 @@ Or you can use [i2c-dump](https://github.com/AdamLaurie/i2c-dump/tree/master) to
 6400 | New Cartridge
 0000 | Installed Cartridge
 ```
-0x10 - 0x15 : YYYYMM - Cartridge Manufacture Year/Month?
+0x10 - 0x15 : YYYYMM - Cartridge Manufacture Year/Month
 
-0x16 - 0x1b : Static 
+0x16 - 0x19 : Static 
 ```
-00000016: 4b4a 4337 3030
+00000016: 4b4a 4337 
 ```
-0x1c - 0x1f - Unknown
+0x1a - 0x1f : Batch Production number
+```
+0000001a: 3030 3336 3832  | 003682
+```
 
 0x20 - 0x27 - EDP Code 
 ```
@@ -215,6 +219,12 @@ Or you can use [i2c-dump](https://github.com/AdamLaurie/i2c-dump/tree/master) to
 ```
 00000074: 53XX XXXX XXXX XXXX XXXX XX00 | SXXXXXXXXXX
 ```
+* Note: Printer serial number doesn't appear on every installed cartridge.  
+
+* New cartridges: 0x30 - 0x7f: 0xff
+
+# Summary
+The above data was gathered from 29 cartridges. A large group of them were new old stock. I'd like to take a look closer at the cartridges that aren't Type 145 HY - and dump more of those.  They are the ones that I picked up from Ebay used.
 
 # Links
 * [i2c-dump](https://github.com/AdamLaurie/i2c-dump/tree/master)
